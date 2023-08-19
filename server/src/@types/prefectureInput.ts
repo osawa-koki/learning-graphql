@@ -1,11 +1,8 @@
 interface PrefectureInput {
-  id: number
   name: string
   capital: string
-  populationMin: number
-  populationMax: number
-  areaMin: number
-  areaMax: number
+  population: number
+  area: number
 }
 
 export default PrefectureInput
