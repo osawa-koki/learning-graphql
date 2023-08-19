@@ -1,10 +1,11 @@
-import sqlite3 from "sqlite3"
+import sqlite3 from 'sqlite3'
 
 async function getRecords <T> (dbPath: string, sql: string): Promise<Awaited<T>> {
   const db = new sqlite3.Database(dbPath)
   const res = await new Promise((resolve, reject) => {
     try {
-      db.serialize(async () => {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      db.serialize(async (): Promise<void> => {
         const records = await new Promise((resolve, reject) => {
           db.all(sql, (err, rows) => {
             if (err != null) {
@@ -14,7 +15,7 @@ async function getRecords <T> (dbPath: string, sql: string): Promise<Awaited<T>>
             resolve(rows)
           })
         })
-        db.close();
+        db.close()
         resolve(records)
       })
     } catch (err) {
