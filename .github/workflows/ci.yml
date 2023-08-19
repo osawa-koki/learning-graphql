@@ -1,0 +1,38 @@
+name: ci
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+      - 'issues/*'
+
+jobs:
+  check:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+        target-directory: [./client, ./server]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: yarn install
+        working-directory: ${{ matrix.target-directory }}
+      - name: Run tests
+        run: yarn test
+        working-directory: ${{ matrix.target-directory }}
+      - name: Type check
+        run: yarn type-check
+        working-directory: ${{ matrix.target-directory }}
+      - name: Linter check
+        run: yarn lint
+        working-directory: ${{ matrix.target-directory }}
+      - name: Check for security vulnerabilities
+        run: yarn audit
+        working-directory: ${{ matrix.target-directory }}
