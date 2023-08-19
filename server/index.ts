@@ -1,14 +1,16 @@
 import { ApolloServer, gql } from 'apollo-server'
 
-// スキーマを定義する
 const typeDefs = gql`
-  type Book {
-    title: String
-    author: String
+  type Prefecture {
+    id: ID!
+    name: String!
+    capital: String!
+    population: Int!
+    area: Float!
   }
 
   type Query {
-    books: [Book]
+    prefectures: [Prefecture]
   }
 `
 

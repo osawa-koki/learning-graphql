@@ -11,7 +11,9 @@
   },
   "scripts": {
     "dev": "ts-node ./index.ts",
-    "db:seed": "ts-node ./seed.ts",
+    "db:create": "ts-node ./db/create.ts",
+    "db:seed": "ts-node ./db/seed.ts",
+    "db:reset": "ts-node ./db/reset.ts",
     "lint": "eslint --ext .ts .",
     "lint:fix": "eslint --ext .ts . --fix",
     "test": "echo \"Error: no test specified\" && exit 0",
