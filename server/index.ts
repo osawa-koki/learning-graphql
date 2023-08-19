@@ -1,6 +1,7 @@
 import { ApolloServer, gql } from 'apollo-server'
 import getRecords from './src/util/getRecords'
 import type Prefecture from './src/@types/prefecture'
+import type PrefectureInput from './src/@types/prefectureInput'
 
 (async () => {
   const typeDefs = gql`
@@ -9,7 +10,7 @@ import type Prefecture from './src/@types/prefecture'
     }
 
     type Prefecture {
-      id: ID!
+      id: Int!
       name: String!
       capital: String!
       population: Int!
@@ -17,11 +18,13 @@ import type Prefecture from './src/@types/prefecture'
     }
 
     input prefectureInput {
-      id: ID
+      id: Int
       name: String
       capital: String
-      population: Int
-      area: Float
+      populationMin: Int
+      populationMax: Int
+      areaMin: Float
+      areaMax: Float
     }
   `
 
@@ -29,7 +32,36 @@ import type Prefecture from './src/@types/prefecture'
 
   const resolvers = {
     Query: {
-      prefectures: () => prefectures
+      prefectures: (_: unknown, args: { filter: PrefectureInput }): Prefecture[] => {
+        const filter = args.filter
+        if (filter == null) {
+          return prefectures
+        }
+        return prefectures.filter((prefecture) => {
+          if (filter.id != null && prefecture.id !== filter.id) {
+            return false
+          }
+          if (filter.name != null && !prefecture.name.includes(filter.name)) {
+            return false
+          }
+          if (filter.capital != null && !prefecture.capital.includes(filter.capital)) {
+            return false
+          }
+          if (filter.populationMin != null && prefecture.population < filter.populationMin) {
+            return false
+          }
+          if (filter.populationMax != null && prefecture.population > filter.populationMax) {
+            return false
+          }
+          if (filter.areaMin != null && prefecture.area < filter.areaMin) {
+            return false
+          }
+          if (filter.areaMax != null && prefecture.area > filter.areaMax) {
+            return false
+          }
+          return true
+        })
+      }
     }
   }
 

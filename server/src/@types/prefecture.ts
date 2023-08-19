@@ -1,5 +1,5 @@
 interface Prefecture {
-  id: string
+  id: number
   name: string
   capital: string
   population: number
