@@ -1,0 +1,12 @@
+{
+  "name": "learning-graphql-server",
+  "description": "🦉🦉🦉 GraphQLについて学習するためのリポジトリです！",
+  "repository": "https://github.com/osawa-koki/learning-graphql.git",
+  "author": "osawa-koki",
+  "license": "Apache-2.0",
+  "private": false,
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=1.22.0"
+  }
+}
