@@ -9,6 +9,13 @@
     "node": ">=18.0.0",
     "yarn": ">=1.22.0"
   },
+  "scripts": {
+    "dev": "ts-node ./index.ts",
+    "lint": "eslint --ext .ts .",
+    "lint:fix": "eslint --ext .ts . --fix",
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "type-check": "tsc --noEmit"
+  },
   "dependencies": {
     "apollo-server": "^3.12.0",
     "graphql": "^16.8.0",
