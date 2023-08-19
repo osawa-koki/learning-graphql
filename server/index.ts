@@ -2,7 +2,7 @@ import { ApolloServer, gql } from 'apollo-server'
 import getRecords from './src/util/getRecords'
 import type Prefecture from './src/@types/prefecture'
 import type PrefectureFilter from './src/@types/prefectureFilter'
-import PrefectureInput from './src/@types/prefectureInput'
+import type PrefectureInput from './src/@types/prefectureInput'
 
 (async () => {
   const typeDefs = gql`
