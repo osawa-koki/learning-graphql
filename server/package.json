@@ -11,6 +11,9 @@
   },
   "scripts": {
     "dev": "ts-node ./index.ts",
+    "db:create": "ts-node ./db/create.ts",
+    "db:seed": "ts-node ./db/seed.ts",
+    "db:reset": "ts-node ./db/reset.ts",
     "lint": "eslint --ext .ts .",
     "lint:fix": "eslint --ext .ts . --fix",
     "test": "echo \"Error: no test specified\" && exit 0",
@@ -18,10 +21,13 @@
   },
   "dependencies": {
     "apollo-server": "^3.12.0",
+    "csv-parse": "^5.4.0",
     "graphql": "^16.8.0",
+    "sqlite3": "^5.1.6",
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
+    "@types/node": "^20.5.1",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "eslint": "^8.0.1",
     "eslint-config-standard-with-typescript": "^37.0.0",
