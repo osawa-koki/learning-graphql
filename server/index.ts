@@ -1,12 +1,17 @@
 import { ApolloServer, gql } from 'apollo-server'
 import getRecords from './src/util/getRecords'
 import type Prefecture from './src/@types/prefecture'
-import type PrefectureInput from './src/@types/prefectureInput'
+import type PrefectureFilter from './src/@types/prefectureFilter'
+import PrefectureInput from './src/@types/prefectureInput'
 
 (async () => {
   const typeDefs = gql`
     type Query {
-      prefectures(filter: prefectureInput): [Prefecture]
+      prefectures(filter: PrefectureFilter): [Prefecture]
+    }
+
+    type Mutation {
+      createPrefecture(input: PrefectureInput): Prefecture
     }
 
     type Prefecture {
@@ -17,7 +22,14 @@ import type PrefectureInput from './src/@types/prefectureInput'
       area: Float!
     }
 
-    input prefectureInput {
+    input PrefectureInput {
+      name: String!
+      capital: String!
+      population: Int!
+      area: Float!
+    }
+
+    input PrefectureFilter {
       id: Int
       name: String
       capital: String
@@ -32,7 +44,7 @@ import type PrefectureInput from './src/@types/prefectureInput'
 
   const resolvers = {
     Query: {
-      prefectures: (_: unknown, args: { filter: PrefectureInput }): Prefecture[] => {
+      prefectures: (_: unknown, args: { filter: PrefectureFilter }): Prefecture[] => {
         const filter = args.filter
         if (filter == null) {
           return prefectures
@@ -61,6 +73,20 @@ import type PrefectureInput from './src/@types/prefectureInput'
           }
           return true
         })
+      }
+    },
+    Mutation: {
+      createPrefecture: (_: unknown, args: { input: PrefectureInput }): Prefecture => {
+        const input = args.input
+        const prefecture: Prefecture = {
+          id: prefectures.length + 1,
+          name: input.name,
+          capital: input.capital,
+          population: input.population,
+          area: input.area
+        }
+        prefectures.push(prefecture)
+        return prefecture
       }
     }
   }
