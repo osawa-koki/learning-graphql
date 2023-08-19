@@ -9,7 +9,7 @@ import '../styles/menu.scss'
 import setting from '../setting'
 import Layout from '../components/Layout'
 
-export default function MyApp ({ Component, pageProps }: AppProps): JSX.Element {
+export default function MyApp ({ Component, pageProps }: AppProps): React.JSX.Element {
   return (
     <>
       <Head>
