@@ -12,6 +12,15 @@ db.serialize(() => {
       area REAL NOT NULL
     )
   `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS cities(
+      id INTEGER PRIMARY KEY NOT NULL,
+      name TEXT NOT NULL,
+      prefecture_id INTEGER NOT NULL,
+      population INTEGER NOT NULL,
+      area REAL NOT NULL
+    )
+  `);
 });
 
 db.close();
