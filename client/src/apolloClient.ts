@@ -1,5 +1,5 @@
-import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost"
-import setting from "../setting"
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
+import setting from '../setting'
 
 const apolloClient = new ApolloClient({
   link: new HttpLink({

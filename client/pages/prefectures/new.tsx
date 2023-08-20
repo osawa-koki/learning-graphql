@@ -36,7 +36,7 @@ export default function PrefectureNewPage (): React.JSX.Element {
         errorReasons
       }
     },
-    [name, capital, population, area],
+    [name, capital, population, area]
   )
 
   const query = gql`
@@ -51,7 +51,7 @@ export default function PrefectureNewPage (): React.JSX.Element {
     }
   `
 
-  const submit = async () => {
+  const submit = async (): void => {
     try {
       setIsLoading(true)
       await apolloClient.mutate({
@@ -123,6 +123,7 @@ export default function PrefectureNewPage (): React.JSX.Element {
         className='mt-3 w-100'
         variant={isValid ? 'primary' : 'secondary'}
         type='button'
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onClick={submit}
         disabled={!isValid || isLoading}
       >
