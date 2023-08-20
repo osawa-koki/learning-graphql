@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Alert, Spinner, Table } from 'react-bootstrap'
+import { gql } from 'apollo-boost'
 import { ApolloProvider, type OperationVariables, Query, type QueryResult } from 'react-apollo'
-import { gql } from '@apollo/react-hooks'
+
 import PrefectureFilter from '../../components/PrefectureFilter'
 import { type Prefecture } from '../../src/gql/graphql'
 import apolloClient from '../../src/apolloClient'
