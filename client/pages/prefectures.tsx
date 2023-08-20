@@ -103,6 +103,10 @@ export default function ListPage (): React.JSX.Element {
       pathname: '/prefectures',
       query: newQuery
     })
+      .then(() => {})
+      .catch((error) => {
+        console.error(error)
+      })
   }, [filterId, filterName, filterCapital, filterPopulationMin, filterPopulationMax, filterAreaMin, filterAreaMax])
 
   const query = gql`
