@@ -2,16 +2,15 @@ import fs from 'fs'
 import csv from 'csv-parse/sync'
 import sqlite3 from 'sqlite3'
 import path from 'path'
-import type Prefecture from '../src/@types/prefecture'
-import type City from '../src/@types/city'
 import { DATABASE_FILE_PATH } from '../src/const'
+import { Prefecture } from '../src/@types/graphql'
 
 const prefectures: Prefecture[] = csv.parse(fs.readFileSync(path.join(__dirname, './seeds/prefectures.csv')), {
   columns: true
 })
-const cities: City[] = csv.parse(fs.readFileSync(path.join(__dirname, './seeds/cities.csv')), {
-  columns: true
-})
+// const cities: City[] = csv.parse(fs.readFileSync(path.join(__dirname, './seeds/cities.csv')), {
+//   columns: true
+// })
 
 const db = new sqlite3.Database(DATABASE_FILE_PATH)
 
@@ -33,21 +32,21 @@ db.serialize(async (): Promise<void> => {
       })
     })
   }
-  for (const city of cities) {
-    await new Promise((resolve, reject) => {
-      db.get('SELECT * FROM cities WHERE id = ?', city.id, (err, row) => {
-        if (err != null) {
-          reject(err)
-          return
-        }
-        if (row != null) {
-          db.run('UPDATE cities SET name = ?, prefecture_id = ?, population = ?, area = ? WHERE id = ?', city.name, city.prefecture_id, city.population, city.area, city.id)
-        } else {
-          db.run('INSERT INTO cities(id, name, prefecture_id, population, area) VALUES (?, ?, ?, ?, ?)', city.id, city.name, city.prefecture_id, city.population, city.area)
-        }
-        resolve({})
-      })
-    })
-  }
+  // for (const city of cities) {
+  //   await new Promise((resolve, reject) => {
+  //     db.get('SELECT * FROM cities WHERE id = ?', city.id, (err, row) => {
+  //       if (err != null) {
+  //         reject(err)
+  //         return
+  //       }
+  //       if (row != null) {
+  //         db.run('UPDATE cities SET name = ?, prefecture_id = ?, population = ?, area = ? WHERE id = ?', city.name, city.prefecture_id, city.population, city.area, city.id)
+  //       } else {
+  //         db.run('INSERT INTO cities(id, name, prefecture_id, population, area) VALUES (?, ?, ?, ?, ?)', city.id, city.name, city.prefecture_id, city.population, city.area)
+  //       }
+  //       resolve({})
+  //     })
+  //   })
+  // }
   db.close()
 })
