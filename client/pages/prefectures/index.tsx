@@ -125,7 +125,7 @@ export default function PrefectureIndexPage (): React.JSX.Element {
     <>
       <h2>
         Prefectures&nbsp;
-        <span role="img" aria-label="Rocket">🚀</span>
+        <span role='img' aria-label='Rocket'>🚀</span>
       </h2>
       <PrefectureFilter
         filterId={filterId}
@@ -171,7 +171,7 @@ export default function PrefectureIndexPage (): React.JSX.Element {
             if (result.loading || result.data == null) {
               return (
                 <div className='mt-3 d-flex align-items-center'>
-                  <Spinner animation="border" role="status" className='me-3' />
+                  <Spinner animation='border' role='status' className='me-3' />
                   <span>Loading...</span>
                 </div>
               )
