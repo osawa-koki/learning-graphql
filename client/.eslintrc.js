@@ -25,7 +25,7 @@ module.exports = {
     'build',
     'dist',
     'next-env.d.ts',
-    './src/gql/*'
+    'src/gql/'
   ],
   rules: {
   }
