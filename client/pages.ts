@@ -5,9 +5,9 @@ const pages = [
     name: 'Home'
   },
   {
-    emoji: '📖',
-    path: '/list/',
-    name: 'List'
+    emoji: '🗾',
+    path: '/prefectures/',
+    name: 'Prefectures'
   }
 ]
 
