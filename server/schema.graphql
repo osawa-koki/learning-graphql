@@ -4,6 +4,7 @@ type Query {
 
 type Mutation {
   createPrefecture(input: PrefectureInput): Prefecture
+  updatePrefecture(id: Int!, input: PrefectureInput): Prefecture
 }
 
 type Prefecture {
