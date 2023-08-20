@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Form, Table } from 'react-bootstrap'
 import { BsArrowsCollapse, BsArrowsExpand } from 'react-icons/bs'
 
 const POPULATION_RANGE_MIN = 0
@@ -206,6 +206,45 @@ export default function PrefectureFilter (props: Props): React.JSX.Element {
             Clear
           </Button>
         </div>
+        <hr />
+        <Table className='mt-3'>
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ID</td>
+              <td>{filterId?.toLocaleString() ?? '<Not filtered>'}</td>
+            </tr>
+            <tr>
+              <td>Name</td>
+              <td>{filterName ?? '<Not filtered>'}</td>
+            </tr>
+            <tr>
+              <td>Capital</td>
+              <td>{filterCapital ?? '<Not filtered>'}</td>
+            </tr>
+            <tr>
+              <td>Population Min</td>
+              <td>{filterPopulationMin?.toLocaleString() ?? '<Not filtered>'}</td>
+            </tr>
+            <tr>
+              <td>Population Max</td>
+              <td>{filterPopulationMax?.toLocaleString() ?? '<Not filtered>'}</td>
+            </tr>
+            <tr>
+              <td>Area Min</td>
+              <td>{filterAreaMin?.toLocaleString() ?? '<Not filtered>'}</td>
+            </tr>
+            <tr>
+              <td>Area Max</td>
+              <td>{filterAreaMax?.toLocaleString() ?? '<Not filtered>'}</td>
+            </tr>
+          </tbody>
+        </Table>
       </div>
     </>
   )

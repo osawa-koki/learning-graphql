@@ -49,7 +49,7 @@ export default function ListPage (): React.JSX.Element {
   return (
     <>
       <h2>
-        Book List&nbsp;
+        Prefectures&nbsp;
         <span role="img" aria-label="Rocket">🚀</span>
       </h2>
       <PrefectureFilter
