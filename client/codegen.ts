@@ -6,7 +6,7 @@ const config: CodegenConfig = {
   schema: "http://localhost:8000",
   documents: "**/*.tsx",
   generates: {
-    "src/gql/": {
+    "./src/gql/": {
       preset: "client",
       plugins: []
     }
