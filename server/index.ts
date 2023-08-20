@@ -1,17 +1,14 @@
 import { ApolloServer } from 'apollo-server'
-import getRecords from './src/util/getRecords'
-import type Prefecture from './src/@types/prefecture'
-import type PrefectureFilter from './src/@types/prefectureFilter'
-import type PrefectureInput from './src/@types/prefectureInput'
 import { loadSchemaSync } from '@graphql-tools/load'
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { addResolversToSchema } from '@graphql-tools/schema'
-import path from 'path'
-import execCommand from './src/util/execCommand'
 import getRecord from './src/util/getRecord'
+import getRecords from './src/util/getRecords'
+import execCommand from './src/util/execCommand'
+import { type Prefecture, type PrefectureFilter, type PrefectureInput } from './src/@types/graphql'
 
 (async () => {
-  const schema = loadSchemaSync(path.join(__dirname, './schema.graphql'), {
+  const schema = loadSchemaSync('./schema.graphql', {
     loaders: [new GraphQLFileLoader()]
   })
 
