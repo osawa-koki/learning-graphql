@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Alert, Spinner, Table } from 'react-bootstrap'
+import { gql } from 'apollo-boost'
 import { ApolloProvider, type OperationVariables, Query, type QueryResult } from 'react-apollo'
-import { ApolloClient } from 'apollo-client'
-import { HttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
-import { gql } from '@apollo/react-hooks'
-import setting from '../setting'
-import PrefectureFilter from '../components/PrefectureFilter'
-import { type Prefecture } from '../src/gql/graphql'
 
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri: `${setting.apiPath}/graphql`
-  }),
-  cache: new InMemoryCache()
-})
+import PrefectureFilter from '../../components/PrefectureFilter'
+import { type Prefecture } from '../../src/gql/graphql'
+import apolloClient from '../../src/apolloClient'
 
-export default function ListPage (): React.JSX.Element {
+export default function PrefectureIndexPage (): React.JSX.Element {
   const router = useRouter()
 
   const [firstLoad, setFirstLoad] = useState<boolean>(true)
@@ -134,7 +125,7 @@ export default function ListPage (): React.JSX.Element {
     <>
       <h2>
         Prefectures&nbsp;
-        <span role="img" aria-label="Rocket">🚀</span>
+        <span role='img' aria-label='Rocket'>🚀</span>
       </h2>
       <PrefectureFilter
         filterId={filterId}
@@ -152,7 +143,7 @@ export default function ListPage (): React.JSX.Element {
         filterAreaMax={filterAreaMax}
         setFilterAreaMax={setFilterAreaMax}
       />
-      <ApolloProvider client={client}>
+      <ApolloProvider client={apolloClient}>
         <Query query={query} variables={
           {
             filterId: filterId != null ? Number(filterId) : null,
@@ -180,7 +171,7 @@ export default function ListPage (): React.JSX.Element {
             if (result.loading || result.data == null) {
               return (
                 <div className='mt-3 d-flex align-items-center'>
-                  <Spinner animation="border" role="status" className='me-3' />
+                  <Spinner animation='border' role='status' className='me-3' />
                   <span>Loading...</span>
                 </div>
               )
