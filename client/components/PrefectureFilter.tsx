@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
+import { BsArrowsCollapse, BsArrowsExpand } from 'react-icons/bs'
 
 const POPULATION_RANGE_MIN = 0
 const POPULATION_RANGE_MAX = 15_000_000
@@ -55,12 +56,11 @@ export default function PrefectureFilter (props: Props): React.JSX.Element {
     return (
       <>
         <div className='bg-light p-3'>
-          <Button
-            variant='primary'
-            onClick={() => { setFilterisOpen(true) }}
-          >
-            Filter
-          </Button>
+          <BsArrowsExpand onClick={
+            () => {
+              setFilterisOpen(true)
+            }
+          } role='button' />
         </div>
       </>
     )
@@ -69,6 +69,12 @@ export default function PrefectureFilter (props: Props): React.JSX.Element {
   return (
     <>
       <div className='bg-light p-3'>
+        <BsArrowsCollapse onClick={
+          () => {
+            setFilterisOpen(false)
+          }
+        } role='button' />
+        <hr />
         <Form.Group className='mb-3'>
           <Form.Label>ID</Form.Label>
           <Form.Control
