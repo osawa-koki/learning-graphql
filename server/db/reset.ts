@@ -1,7 +1,7 @@
 import fs from 'fs'
-import path from 'path'
+import { DATABASE_FILE_PATH } from '../src/const'
 
-const file = path.join(__dirname, './db.sqlite3')
+const file = DATABASE_FILE_PATH
 if (fs.existsSync(file)) {
   fs.unlinkSync(file)
   console.log('Deleted database file.')

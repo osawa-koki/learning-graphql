@@ -7,13 +7,14 @@ import { loadSchemaSync } from '@graphql-tools/load'
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { addResolversToSchema } from '@graphql-tools/schema'
 import path from 'path'
+import execCommand from './src/util/execCommand'
 
 (async () => {
   const schema = loadSchemaSync(path.join(__dirname, './schema.graphql'), {
     loaders: [new GraphQLFileLoader()]
   })
 
-  const prefectures: Prefecture[] = await getRecords('./db/db.sqlite3', 'SELECT * FROM prefectures')
+  const prefectures: Prefecture[] = await getRecords('SELECT * FROM prefectures')
 
   const resolvers = {
     Query: {
@@ -49,7 +50,7 @@ import path from 'path'
       }
     },
     Mutation: {
-      createPrefecture: (_: unknown, args: { input: PrefectureInput }): Prefecture => {
+      createPrefecture: async (_: unknown, args: { input: PrefectureInput }): Promise<Prefecture> => {
         const input = args.input
         const prefecture: Prefecture = {
           id: prefectures.length + 1,
@@ -58,6 +59,7 @@ import path from 'path'
           population: input.population,
           area: input.area
         }
+        await execCommand('INSERT INTO prefectures (id, name, capital, population, area) VALUES (?, ?, ?, ?, ?)', [prefecture.id, prefecture.name, prefecture.capital, prefecture.population, prefecture.area])
         prefectures.push(prefecture)
         return prefecture
       }
