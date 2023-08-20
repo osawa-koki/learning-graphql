@@ -10,7 +10,8 @@ db.serialize(() => {
       name TEXT NOT NULL,
       capital TEXT NOT NULL,
       population INTEGER NOT NULL,
-      area REAL NOT NULL
+      area REAL NOT NULL,
+      active INTEGER NOT NULL DEFAULT 1
     )
   `)
   db.run(`
@@ -19,7 +20,8 @@ db.serialize(() => {
       name TEXT NOT NULL,
       prefecture_id INTEGER NOT NULL,
       population INTEGER NOT NULL,
-      area REAL NOT NULL
+      area REAL NOT NULL,
+      active INTEGER NOT NULL DEFAULT 1
     )
   `)
 })

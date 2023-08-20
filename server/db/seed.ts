@@ -6,7 +6,7 @@ import type Prefecture from '../src/@types/prefecture'
 import type City from '../src/@types/city'
 import { DATABASE_FILE_PATH } from '../src/const'
 
-const prefectures: Prefecture[] = csv.parse(fs.readFileSync(path.join(__dirname, './seeds/cities.csv')), {
+const prefectures: Prefecture[] = csv.parse(fs.readFileSync(path.join(__dirname, './seeds/prefectures.csv')), {
   columns: true
 })
 const cities: City[] = csv.parse(fs.readFileSync(path.join(__dirname, './seeds/cities.csv')), {
