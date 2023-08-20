@@ -24,6 +24,9 @@
   },
   "dependencies": {
     "@apollo/react-hooks": "^4.0.0",
+    "@graphql-tools/graphql-file-loader": "^8.0.0",
+    "@graphql-tools/load": "^8.0.0",
+    "@graphql-tools/schema": "^10.0.0",
     "apollo-boost": "^0.4.9",
     "bootstrap": "^5.3.1",
     "graphql": "^16.8.0",
