@@ -8,17 +8,19 @@ import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { addResolversToSchema } from '@graphql-tools/schema'
 import path from 'path'
 import execCommand from './src/util/execCommand'
+import getRecord from './src/util/getRecord'
 
 (async () => {
   const schema = loadSchemaSync(path.join(__dirname, './schema.graphql'), {
     loaders: [new GraphQLFileLoader()]
   })
 
-  const prefectures: Prefecture[] = await getRecords('SELECT * FROM prefectures')
-
   const resolvers = {
     Query: {
-      prefectures: (_: unknown, args: { filter: PrefectureFilter }): Prefecture[] => {
+      prefectures: async (_: unknown, args: { filter: PrefectureFilter }): Promise<Prefecture[]> => {
+        const prefectures = await getRecords<Prefecture[]>(
+          'SELECT * FROM prefectures WHERE active = 1'
+        )
         const filter = args.filter
         if (filter == null) {
           return prefectures
@@ -52,21 +54,23 @@ import execCommand from './src/util/execCommand'
     Mutation: {
       createPrefecture: async (_: unknown, args: { input: PrefectureInput }): Promise<Prefecture> => {
         const input = args.input
+        const maxPrefectureId = (await getRecord<{ max_prefecture_id: number }>(
+          'SELECT MAX(id) AS max_prefecture_id FROM prefectures'
+        )).max_prefecture_id
         const prefecture: Prefecture = {
-          id: prefectures.length + 1,
+          id: maxPrefectureId + 1,
           name: input.name,
           capital: input.capital,
           population: input.population,
           area: input.area
         }
         await execCommand('INSERT INTO prefectures (id, name, capital, population, area) VALUES (?, ?, ?, ?, ?)', [prefecture.id, prefecture.name, prefecture.capital, prefecture.population, prefecture.area])
-        prefectures.push(prefecture)
         return prefecture
       },
       updatePrefecture: async (_: unknown, args: { id: number, input: PrefectureInput }): Promise<Prefecture> => {
         const id = args.id
         const input = args.input
-        const prefecture = prefectures.find((prefecture) => prefecture.id === id)
+        const prefecture = await getRecord<Prefecture>('SELECT * FROM prefectures WHERE id = ?', [id])
         if (prefecture == null) {
           throw new Error(`Prefecture with id ${id} not found.`)
         }
@@ -74,17 +78,16 @@ import execCommand from './src/util/execCommand'
         prefecture.capital = input.capital
         prefecture.population = input.population
         prefecture.area = input.area
-        await execCommand('UPDATE prefectures SET name = ?, capital = ?, population = ?, area = ? WHERE id = ?', [prefecture.name, prefecture.capital, prefecture.population, prefecture.area, prefecture.id])
+        await execCommand('UPDATE prefectures SET name = ?, capital = ?, population = ?, area = ? WHERE id = ? AND active = 1', [prefecture.name, prefecture.capital, prefecture.population, prefecture.area, prefecture.id])
         return prefecture
       },
       deletePrefecture: async (_: unknown, args: { id: number }): Promise<Prefecture> => {
         const id = args.id
-        const prefecture = prefectures.find((prefecture) => prefecture.id === id)
+        const prefecture = await getRecord<Prefecture>('SELECT * FROM prefectures WHERE id = ? AND active = 1', [id])
         if (prefecture == null) {
           throw new Error(`Prefecture with id ${id} not found.`)
         }
-        prefectures.splice(prefectures.indexOf(prefecture), 1)
-        await execCommand('DELETE FROM prefectures WHERE id = ?', [prefecture.id])
+        await execCommand('UPDATE prefectures SET active = 0 WHERE id = ?', [prefecture.id])
         return prefecture
       }
     }
@@ -93,22 +96,13 @@ import execCommand from './src/util/execCommand'
   const schemaWithResolvers = addResolversToSchema({ schema, resolvers })
   const server = new ApolloServer({ schema: schemaWithResolvers })
 
-  server.listen(
+  const { url } = await server.listen(
     { port: 8000 }
   )
-    .then(({ url }) => {
-      console.log(`🚀 Server ready at ${url}`)
-    })
-    .catch((err: unknown) => {
-      if (err instanceof Error) {
-        console.error(`❌ Server error: ${err.message}\n${err.stack as string}`)
-      } else {
-        console.error(`❌ Server error: ${err as string}`)
-      }
-    })
+  console.log(`🚀 Server ready at ${url}`)
 })()
   .then(() => {
-    console.log('done')
+    console.log('Run server successfully.')
   })
   .catch((err) => {
     console.error(err)
