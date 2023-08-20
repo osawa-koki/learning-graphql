@@ -203,6 +203,7 @@ export default function PrefectureIndexPage (): React.JSX.Element {
                           <BsFillTrashFill
                             className='text-danger'
                             role='button'
+                            // eslint-disable-next-line @typescript-eslint/no-misused-promises
                             onClick={async () => {
                               try {
                                 if (!window.confirm('Are you sure?')) return
@@ -222,7 +223,7 @@ export default function PrefectureIndexPage (): React.JSX.Element {
                                     id: prefecture.id
                                   }
                                 })
-                                result.refetch()
+                                await result.refetch()
                                 toast.success(`Deleted: ${prefecture.name}`)
                               } catch (e) {
                                 toast.error(e.message)
