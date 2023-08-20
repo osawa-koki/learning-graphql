@@ -51,7 +51,7 @@ export default function PrefectureNewPage (): React.JSX.Element {
     }
   `
 
-  const submit = async (): void => {
+  const submit = async (): Promise<void> => {
     try {
       setIsLoading(true)
       await apolloClient.mutate({
