@@ -17,7 +17,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-export default function ListPage (): React.JSX.Element {
+export default function PrefectureIndexPage (): React.JSX.Element {
   const router = useRouter()
 
   const [firstLoad, setFirstLoad] = useState<boolean>(true)
