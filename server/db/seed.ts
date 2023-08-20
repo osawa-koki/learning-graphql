@@ -5,14 +5,14 @@ import path from 'path'
 import type Prefecture from '../src/@types/prefecture'
 import type City from '../src/@types/city'
 
-const prefectures: Prefecture[] = csv.parse(fs.readFileSync(path.join(__dirname, '/seeds/cities.csv')), {
+const prefectures: Prefecture[] = csv.parse(fs.readFileSync(path.join(__dirname, './seeds/cities.csv')), {
   columns: true
 })
-const cities: City[] = csv.parse(fs.readFileSync(path.join(__dirname, '/seeds/cities.csv')), {
+const cities: City[] = csv.parse(fs.readFileSync(path.join(__dirname, './seeds/cities.csv')), {
   columns: true
 })
 
-const db = new sqlite3.Database(path.join(__dirname, '/db.sqlite3'))
+const db = new sqlite3.Database(path.join(__dirname, './db.sqlite3'))
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 db.serialize(async (): Promise<void> => {

@@ -1,7 +1,7 @@
 import path from 'path'
 import sqlite3 from 'sqlite3'
 
-const db = new sqlite3.Database(path.join(__dirname, '/db.sqlite3'))
+const db = new sqlite3.Database(path.join(__dirname, './db.sqlite3'))
 
 db.serialize(() => {
   db.run(`
