@@ -5,7 +5,7 @@ import { ApolloProvider, type OperationVariables, Query, type QueryResult } from
 import { gql } from '@apollo/react-hooks'
 import PrefectureFilter from '../../components/PrefectureFilter'
 import { type Prefecture } from '../../src/gql/graphql'
-import client from '../../src/apolloClient'
+import apolloClient from '../../src/apolloClient'
 
 export default function PrefectureIndexPage (): React.JSX.Element {
   const router = useRouter()
@@ -142,7 +142,7 @@ export default function PrefectureIndexPage (): React.JSX.Element {
         filterAreaMax={filterAreaMax}
         setFilterAreaMax={setFilterAreaMax}
       />
-      <ApolloProvider client={client}>
+      <ApolloProvider client={apolloClient}>
         <Query query={query} variables={
           {
             filterId: filterId != null ? Number(filterId) : null,
