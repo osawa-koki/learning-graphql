@@ -1,44 +1,17 @@
-import { ApolloServer, gql } from 'apollo-server'
+import { ApolloServer } from 'apollo-server'
 import getRecords from './src/util/getRecords'
 import type Prefecture from './src/@types/prefecture'
 import type PrefectureFilter from './src/@types/prefectureFilter'
 import type PrefectureInput from './src/@types/prefectureInput'
+import { loadSchemaSync } from '@graphql-tools/load'
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
+import { addResolversToSchema } from '@graphql-tools/schema'
+import path from 'path'
 
 (async () => {
-  const typeDefs = gql`
-    type Query {
-      prefectures(filter: PrefectureFilter): [Prefecture]
-    }
-
-    type Mutation {
-      createPrefecture(input: PrefectureInput): Prefecture
-    }
-
-    type Prefecture {
-      id: Int!
-      name: String!
-      capital: String!
-      population: Int!
-      area: Float!
-    }
-
-    input PrefectureInput {
-      name: String!
-      capital: String!
-      population: Int!
-      area: Float!
-    }
-
-    input PrefectureFilter {
-      id: Int
-      name: String
-      capital: String
-      populationMin: Int
-      populationMax: Int
-      areaMin: Float
-      areaMax: Float
-    }
-  `
+  const schema = loadSchemaSync(path.join(__dirname, './schema.graphql'), {
+    loaders: [new GraphQLFileLoader()]
+  })
 
   const prefectures: Prefecture[] = await getRecords('./db/db.sqlite3', 'SELECT * FROM prefectures')
 
@@ -91,8 +64,8 @@ import type PrefectureInput from './src/@types/prefectureInput'
     }
   }
 
-  // サーバーを起動する
-  const server = new ApolloServer({ typeDefs, resolvers })
+  const schemaWithResolvers = addResolversToSchema({ schema, resolvers })
+  const server = new ApolloServer({ schema: schemaWithResolvers })
 
   server.listen(
     { port: 8000 }

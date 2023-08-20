@@ -1,0 +1,32 @@
+type Query {
+  prefectures(filter: PrefectureFilter): [Prefecture]
+}
+
+type Mutation {
+  createPrefecture(input: PrefectureInput): Prefecture
+}
+
+type Prefecture {
+  id: Int!
+  name: String!
+  capital: String!
+  population: Int!
+  area: Float!
+}
+
+input PrefectureInput {
+  name: String!
+  capital: String!
+  population: Int!
+  area: Float!
+}
+
+input PrefectureFilter {
+  id: Int
+  name: String
+  capital: String
+  populationMin: Int
+  populationMax: Int
+  areaMin: Float
+  areaMax: Float
+}
