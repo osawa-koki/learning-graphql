@@ -19,12 +19,18 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation';
   createPrefecture?: Maybe<Prefecture>;
+  deletePrefecture?: Maybe<Prefecture>;
   updatePrefecture?: Maybe<Prefecture>;
 };
 
 
 export type MutationCreatePrefectureArgs = {
   input?: InputMaybe<PrefectureInput>;
+};
+
+
+export type MutationDeletePrefectureArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -166,6 +172,7 @@ export type ResolversParentTypes = {
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createPrefecture?: Resolver<Maybe<ResolversTypes['Prefecture']>, ParentType, ContextType, Partial<MutationCreatePrefectureArgs>>;
+  deletePrefecture?: Resolver<Maybe<ResolversTypes['Prefecture']>, ParentType, ContextType, RequireFields<MutationDeletePrefectureArgs, 'id'>>;
   updatePrefecture?: Resolver<Maybe<ResolversTypes['Prefecture']>, ParentType, ContextType, RequireFields<MutationUpdatePrefectureArgs, 'id'>>;
 };
 
