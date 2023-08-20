@@ -50,7 +50,7 @@ import execCommand from './src/util/execCommand'
       }
     },
     Mutation: {
-      createPrefecture: (_: unknown, args: { input: PrefectureInput }): Prefecture => {
+      createPrefecture: async (_: unknown, args: { input: PrefectureInput }): Promise<Prefecture> => {
         const input = args.input
         const prefecture: Prefecture = {
           id: prefectures.length + 1,
@@ -59,7 +59,7 @@ import execCommand from './src/util/execCommand'
           population: input.population,
           area: input.area
         }
-        execCommand('INSERT INTO prefectures (id, name, capital, population, area) VALUES (?, ?, ?, ?, ?)', [prefecture.id, prefecture.name, prefecture.capital, prefecture.population, prefecture.area])
+        await execCommand('INSERT INTO prefectures (id, name, capital, population, area) VALUES (?, ?, ?, ?, ?)', [prefecture.id, prefecture.name, prefecture.capital, prefecture.population, prefecture.area])
         prefectures.push(prefecture)
         return prefecture
       }
