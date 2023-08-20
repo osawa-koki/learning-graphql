@@ -10,8 +10,8 @@ import path from 'path'
 
 (async () => {
   const schema = loadSchemaSync(path.join(__dirname, './schema.graphql'), {
-    loaders: [new GraphQLFileLoader()],
-  });
+    loaders: [new GraphQLFileLoader()]
+  })
 
   const prefectures: Prefecture[] = await getRecords('./db/db.sqlite3', 'SELECT * FROM prefectures')
 
@@ -64,8 +64,8 @@ import path from 'path'
     }
   }
 
-  const schemaWithResolvers = addResolversToSchema({ schema, resolvers });
-  const server = new ApolloServer({ schema: schemaWithResolvers });
+  const schemaWithResolvers = addResolversToSchema({ schema, resolvers })
+  const server = new ApolloServer({ schema: schemaWithResolvers })
 
   server.listen(
     { port: 8000 }
