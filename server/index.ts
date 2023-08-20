@@ -76,6 +76,16 @@ import execCommand from './src/util/execCommand'
         prefecture.area = input.area
         await execCommand('UPDATE prefectures SET name = ?, capital = ?, population = ?, area = ? WHERE id = ?', [prefecture.name, prefecture.capital, prefecture.population, prefecture.area, prefecture.id])
         return prefecture
+      },
+      deletePrefecture: async (_: unknown, args: { id: number }): Promise<Prefecture> => {
+        const id = args.id
+        const prefecture = prefectures.find((prefecture) => prefecture.id === id)
+        if (prefecture == null) {
+          throw new Error(`Prefecture with id ${id} not found.`)
+        }
+        prefectures.splice(prefectures.indexOf(prefecture), 1)
+        await execCommand('DELETE FROM prefectures WHERE id = ?', [prefecture.id])
+        return prefecture
       }
     }
   }
