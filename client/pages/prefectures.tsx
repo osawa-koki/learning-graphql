@@ -6,8 +6,8 @@ import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { gql } from '@apollo/react-hooks'
 import setting from '../setting'
-import type Prefecture from '../src/@types/Prefecture'
 import PrefectureFilter from '../components/PrefectureFilter'
+import { type Prefecture } from '../src/gql/graphql'
 
 const client = new ApolloClient({
   link: new HttpLink({
