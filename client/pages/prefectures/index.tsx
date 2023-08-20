@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Alert, Spinner, Table } from 'react-bootstrap'
+import { BsFillTrashFill } from 'react-icons/bs'
 import { gql } from 'apollo-boost'
 import { ApolloProvider, type OperationVariables, Query, type QueryResult } from 'react-apollo'
 
 import PrefectureFilter from '../../components/PrefectureFilter'
 import { type Prefecture } from '../../src/gql/graphql'
 import apolloClient from '../../src/apolloClient'
+import { toast } from 'react-toastify'
 
 export default function PrefectureIndexPage (): React.JSX.Element {
   const router = useRouter()
@@ -186,6 +188,7 @@ export default function PrefectureIndexPage (): React.JSX.Element {
                       <th>Capital</th>
                       <th>Population</th>
                       <th>Area</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -196,6 +199,38 @@ export default function PrefectureIndexPage (): React.JSX.Element {
                         <td>{prefecture.capital}</td>
                         <td>{prefecture.population}</td>
                         <td>{prefecture.area}</td>
+                        <td>
+                          <BsFillTrashFill
+                            className='text-danger'
+                            role='button'
+                            onClick={async () => {
+                              try {
+                                if (!window.confirm('Are you sure?')) return
+                                await apolloClient.mutate({
+                                  mutation: gql`
+                                    mutation($id: Int!) {
+                                      deletePrefecture(id: $id) {
+                                        id
+                                        name
+                                        capital
+                                        population
+                                        area
+                                      }
+                                    }
+                                  `,
+                                  variables: {
+                                    id: prefecture.id
+                                  }
+                                })
+                                result.refetch()
+                                toast.success(`Deleted: ${prefecture.name}`)
+                              }
+                              catch (e) {
+                                toast.error(e.message)
+                              }
+                            }}
+                          />
+                        </td>
                       </tr>
                     ))}
                   </tbody>
