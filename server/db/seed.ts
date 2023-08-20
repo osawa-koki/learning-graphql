@@ -3,7 +3,7 @@ import csv from 'csv-parse/sync'
 import sqlite3 from 'sqlite3'
 import path from 'path'
 import { DATABASE_FILE_PATH } from '../src/const'
-import { Prefecture } from '../src/@types/graphql'
+import { type Prefecture } from '../src/@types/graphql'
 
 const prefectures: Prefecture[] = csv.parse(fs.readFileSync(path.join(__dirname, './seeds/prefectures.csv')), {
   columns: true
