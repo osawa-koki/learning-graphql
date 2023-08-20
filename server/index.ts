@@ -54,7 +54,7 @@ import getRecord from './src/util/getRecord'
     Mutation: {
       createPrefecture: async (_: unknown, args: { input: PrefectureInput }): Promise<Prefecture> => {
         const input = args.input
-        const maxPrefectureId = (await getRecord<{max_prefecture_id: number}>(
+        const maxPrefectureId = (await getRecord<{ max_prefecture_id: number }>(
           'SELECT MAX(id) AS max_prefecture_id FROM prefectures'
         )).max_prefecture_id
         const prefecture: Prefecture = {
@@ -99,7 +99,7 @@ import getRecord from './src/util/getRecord'
   const { url } = await server.listen(
     { port: 8000 }
   )
-    console.log(`🚀 Server ready at ${url}`)
+  console.log(`🚀 Server ready at ${url}`)
 })()
   .then(() => {
     console.log('Run server successfully.')
