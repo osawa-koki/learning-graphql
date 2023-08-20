@@ -62,6 +62,20 @@ import execCommand from './src/util/execCommand'
         await execCommand('INSERT INTO prefectures (id, name, capital, population, area) VALUES (?, ?, ?, ?, ?)', [prefecture.id, prefecture.name, prefecture.capital, prefecture.population, prefecture.area])
         prefectures.push(prefecture)
         return prefecture
+      },
+      updatePrefecture: async (_: unknown, args: { id: number, input: PrefectureInput }): Promise<Prefecture> => {
+        const id = args.id
+        const input = args.input
+        const prefecture = prefectures.find((prefecture) => prefecture.id === id)
+        if (prefecture == null) {
+          throw new Error(`Prefecture with id ${id} not found.`)
+        }
+        prefecture.name = input.name
+        prefecture.capital = input.capital
+        prefecture.population = input.population
+        prefecture.area = input.area
+        await execCommand('UPDATE prefectures SET name = ?, capital = ?, population = ?, area = ? WHERE id = ?', [prefecture.name, prefecture.capital, prefecture.population, prefecture.area, prefecture.id])
+        return prefecture
       }
     }
   }

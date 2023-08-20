@@ -12,6 +12,7 @@ module.exports = {
     "sourceType": "module"
   },
   "ignorePatterns": [
+    "graphql.ts",
   ],
   "rules": {
   }
