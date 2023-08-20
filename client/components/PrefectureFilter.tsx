@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form, Table } from 'react-bootstrap'
 import { BsArrowsCollapse, BsArrowsExpand } from 'react-icons/bs'
 
@@ -44,13 +44,23 @@ export default function PrefectureFilter (props: Props): React.JSX.Element {
 
   const [filterisOpen, setFilterisOpen] = useState<boolean>(false)
 
-  const [tmpFilterId, setTmpFilterId] = useState<number | null>(null)
-  const [tmpFilterName, setTmpFilterName] = useState<string | null>(null)
-  const [tmpFilterCapital, setTmpFilterCapital] = useState<string | null>(null)
-  const [tmpFilterPopulationMin, setTmpFilterPopulationMin] = useState<number | null>(null)
-  const [tmpFilterPopulationMax, setTmpFilterPopulationMax] = useState<number | null>(null)
-  const [tmpFilterAreaMin, setTmpFilterAreaMin] = useState<number | null>(null)
-  const [tmpFilterAreaMax, setTmpFilterAreaMax] = useState<number | null>(null)
+  const [tmpFilterId, setTmpFilterId] = useState<number | null>(filterId)
+  const [tmpFilterName, setTmpFilterName] = useState<string | null>(filterName)
+  const [tmpFilterCapital, setTmpFilterCapital] = useState<string | null>(filterCapital)
+  const [tmpFilterPopulationMin, setTmpFilterPopulationMin] = useState<number | null>(filterPopulationMin)
+  const [tmpFilterPopulationMax, setTmpFilterPopulationMax] = useState<number | null>(filterPopulationMax)
+  const [tmpFilterAreaMin, setTmpFilterAreaMin] = useState<number | null>(filterAreaMin)
+  const [tmpFilterAreaMax, setTmpFilterAreaMax] = useState<number | null>(filterAreaMax)
+
+  useEffect(() => {
+    setTmpFilterId(filterId)
+    setTmpFilterName(filterName)
+    setTmpFilterCapital(filterCapital)
+    setTmpFilterPopulationMin(filterPopulationMin)
+    setTmpFilterPopulationMax(filterPopulationMax)
+    setTmpFilterAreaMin(filterAreaMin)
+    setTmpFilterAreaMax(filterAreaMax)
+  }, [filterId, filterName, filterCapital, filterPopulationMin, filterPopulationMax, filterAreaMin, filterAreaMax])
 
   if (!filterisOpen) {
     return (
