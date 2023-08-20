@@ -7,7 +7,12 @@ const pages = [
   {
     emoji: '🗾',
     path: '/prefectures/',
-    name: 'Prefectures'
+    name: 'Prefecture List'
+  },
+  {
+    emoji: '📊',
+    path: '/prefectures/new/',
+    name: 'New Prefecture'
   }
 ]
 
