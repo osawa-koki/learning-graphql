@@ -224,8 +224,7 @@ export default function PrefectureIndexPage (): React.JSX.Element {
                                 })
                                 result.refetch()
                                 toast.success(`Deleted: ${prefecture.name}`)
-                              }
-                              catch (e) {
+                              } catch (e) {
                                 toast.error(e.message)
                               }
                             }}
